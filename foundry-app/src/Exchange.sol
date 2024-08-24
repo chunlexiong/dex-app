@@ -63,7 +63,7 @@ contract Exchange is ERC20 {
         return (ethToReturn, tokenToReturn);
     }
 
-    function getOutputAmountFromSwap(uint256 inputAmount, uint256 inputReserve, uint256 outputReserve) {
+    function getOutputAmountFromSwap(uint256 inputAmount, uint256 inputReserve, uint256 outputReserve) public pure returns (uint256) {
         require(inputReserve > 0 && outputReserve > 0, "Reserves must be greater than 0");
 
         uint256 inputAmountWithFee = inputAmount * 99;
@@ -87,7 +87,7 @@ contract Exchange is ERC20 {
     }
 
     function tokenToEthSwap(uint256 tokensToSwap, uint256 minEthToReceive) public payable {
-        uint256 tokenReserveBalance = getReserve;
+        uint256 tokenReserveBalance = getReserve();
         uint256 ethToReceive = getOutputAmountFromSwap(
             tokensToSwap,
             tokenReserveBalance,
